@@ -110,6 +110,9 @@
                     if ([path hasSuffix:@".pdf"]) {
                         NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
                         [mailComposer addAttachmentData:data mimeType:@"application/pdf" fileName:[NSString stringWithFormat:@"attachment%d.pdf", counter]];
+                    } else if ([path hasSuffix:@".csv"]) {
+                        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+                        [mailComposer addAttachmentData:data mimeType:@"text/csv" fileName:[NSString stringWithFormat:@"attachment%d.csv", counter]];
                     } else {
                         // supposed image
                         UIImage *image = [UIImage imageWithContentsOfFile:path];
@@ -119,7 +122,7 @@
                     counter++;
                 }
                 @catch (NSException *exception) {
-                    DLog(@"Cannot attach file at path %@; error: %@", path, exception);
+                    NSLog(@"Cannot attach file at path %@; error: %@", path, exception);
                 }
             }
         }
